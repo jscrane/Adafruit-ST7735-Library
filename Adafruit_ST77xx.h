@@ -102,9 +102,9 @@ class Adafruit_ST77xx : public Adafruit_SPITFT {
     void enableDisplay(boolean enable);
     void enableTearing(boolean enable);
   protected:
-    uint8_t _colstart = 0, ///< Some displays need this changed to offset
-            _rowstart = 0, ///< Some displays need this changed to offset
-            spiMode   = SPI_MODE0; ///< Certain display needs MODE3 instead
+    uint8_t _colstart, ///< Some displays need this changed to offset
+            _rowstart, ///< Some displays need this changed to offset
+            spiMode; ///< Certain display needs MODE3 instead
 
     void    begin(uint32_t freq = 0);
     void    commonInit(const uint8_t *cmdList);

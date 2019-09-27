@@ -24,9 +24,11 @@
 
 #include "Adafruit_ST77xx.h"
 #include <limits.h>
+#ifndef ENERGIA
 #ifndef ARDUINO_STM32_FEATHER
   #include "pins_arduino.h"
   #include "wiring_private.h"
+#endif
 #endif
 #include <SPI.h>
 
@@ -48,6 +50,8 @@
 Adafruit_ST77xx::Adafruit_ST77xx(uint16_t w, uint16_t h, int8_t cs,
   int8_t dc, int8_t mosi, int8_t sclk, int8_t rst, int8_t miso) :
   Adafruit_SPITFT(w, h, cs, dc, mosi, sclk, rst, miso) {
+	_colstart = _rowstart = 0;
+	spiMode = SPI_MODE0;
 }
 
 /**************************************************************************/
@@ -61,7 +65,9 @@ Adafruit_ST77xx::Adafruit_ST77xx(uint16_t w, uint16_t h, int8_t cs,
 */
 /**************************************************************************/
 Adafruit_ST77xx::Adafruit_ST77xx(uint16_t w, uint16_t h, int8_t cs,
-  int8_t dc, int8_t rst) : Adafruit_SPITFT(w, h, cs, dc, rst) {
+  int8_t dc, int8_t rst) : Adafruit_SPITFT(w, h, &SPI, cs, dc, rst) {
+	_colstart = _rowstart = 0;
+	spiMode = SPI_MODE0;
 }
 
 #if !defined(ESP8266)
@@ -79,6 +85,8 @@ Adafruit_ST77xx::Adafruit_ST77xx(uint16_t w, uint16_t h, int8_t cs,
 Adafruit_ST77xx::Adafruit_ST77xx(uint16_t w, uint16_t h, SPIClass *spiClass,
   int8_t cs, int8_t dc, int8_t rst) : Adafruit_SPITFT(w, h, spiClass, cs,
   dc, rst) {
+	_colstart = _rowstart = 0;
+	spiMode = SPI_MODE0;
 }
 #endif // end !ESP8266
 
